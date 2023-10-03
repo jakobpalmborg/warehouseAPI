@@ -97,4 +97,12 @@ public class WarehouseResource {
         return warehouse.getAllCategoriesWithProducts();
     }
 
+    @GET
+    @Path("/categories/{category}/count")
+    @Produces(MediaType.APPLICATION_JSON)
+    public int getNumberOfProductsInCategoryEndPoint(@PathParam("category") Category category) {
+        return warehouse.getNumberOfProductsInCategory(category);
+    }
+
+
 }
