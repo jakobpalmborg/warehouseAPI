@@ -13,6 +13,7 @@ import jakarta.ws.rs.core.Response;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -102,6 +103,13 @@ public class WarehouseResource {
     @Produces(MediaType.APPLICATION_JSON)
     public int getNumberOfProductsInCategoryEndPoint(@PathParam("category") Category category) {
         return warehouse.getNumberOfProductsInCategory(category);
+    }
+
+    @GET
+    @Path("/products/initials")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Map<String, Integer> getLetterOfProductNamesEndpoint() {
+        return warehouse.getLetterOfProductNames();
     }
 
 
