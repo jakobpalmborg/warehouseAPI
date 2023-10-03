@@ -10,6 +10,8 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,4 +72,13 @@ public class WarehouseResource {
         return Response.accepted().build();
     }
 
+    @GET
+    @Path("/products/new/{date}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<ImmutableProduct> getNewProductsEndpoint(@PathParam("date") String dateString) {
+        String dateStringWithHours = dateString + " 00:00";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime dateTime = LocalDateTime.parse(dateStringWithHours, formatter);
+        return warehouse.getNewProducts(dateTime);
+    }
 }
