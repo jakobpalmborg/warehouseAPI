@@ -7,6 +7,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -16,10 +17,10 @@ import static java.util.stream.Collectors.counting;
 @ApplicationScoped
 public class Warehouse implements Iwarehouse {
 
-    private final ArrayList<Product> productList;
+    private final CopyOnWriteArrayList<Product> productList;
 
     public Warehouse() {
-        productList = new ArrayList<>();
+        productList = new CopyOnWriteArrayList<>();
     }
 
     private ImmutableProduct convertObjectToRecord(Product product) {
