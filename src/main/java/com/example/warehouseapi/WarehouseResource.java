@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Path("/")
 public class WarehouseResource {
@@ -88,4 +89,12 @@ public class WarehouseResource {
     public List<ImmutableProduct> getModifiedProductsEndpoint() {
         return warehouse.getModifiedProducts();
     }
+
+    @GET
+    @Path("/categories")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Set<Category> getAllCategoriesWithProductsEndpoint() {
+        return warehouse.getAllCategoriesWithProducts();
+    }
+
 }
