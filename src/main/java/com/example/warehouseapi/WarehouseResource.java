@@ -59,4 +59,15 @@ public class WarehouseResource {
     public List<ImmutableProduct> getAllProductsInCategory(@PathParam("category") Category category) {
         return warehouse.getCategory(category);
     }
+
+    @PUT
+    @Path("products/{id}")
+    public Response modifyProductEndpoint(@PathParam("id") String id, NewProduct prod){
+        String name = prod.name();
+        Category category = prod.category();
+        int rating = prod.rating();
+        warehouse.modifyProduct(id, name, category, rating);
+        return Response.accepted().build();
+    }
+
 }
