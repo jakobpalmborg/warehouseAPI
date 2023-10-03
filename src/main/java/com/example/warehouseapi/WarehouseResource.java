@@ -112,5 +112,11 @@ public class WarehouseResource {
         return warehouse.getLetterOfProductNames();
     }
 
+    @GET
+    @Path("/products/max-rating")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<ImmutableProduct> getMaxRatingEndpoint() {
+        return warehouse.getMaxRating();
+    }
 
 }
