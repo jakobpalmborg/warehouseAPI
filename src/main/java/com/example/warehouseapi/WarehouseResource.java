@@ -81,4 +81,11 @@ public class WarehouseResource {
         LocalDateTime dateTime = LocalDateTime.parse(dateStringWithHours, formatter);
         return warehouse.getNewProducts(dateTime);
     }
+
+    @GET
+    @Path("/products/modified")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<ImmutableProduct> getModifiedProductsEndpoint() {
+        return warehouse.getModifiedProducts();
+    }
 }
