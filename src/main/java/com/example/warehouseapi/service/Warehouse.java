@@ -3,6 +3,7 @@ package com.example.warehouseapi.service;
 import com.example.warehouseapi.entities.Category;
 import com.example.warehouseapi.entities.ImmutableProduct;
 import com.example.warehouseapi.entities.Product;
+import jakarta.enterprise.context.ApplicationScoped;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -12,7 +13,8 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.counting;
 
-public class Warehouse {
+@ApplicationScoped
+public class Warehouse implements Iwarehouse {
 
     private final ArrayList<Product> productList;
 
@@ -30,23 +32,27 @@ public class Warehouse {
                 product.getModificationDate());
     }
 
+    @Override
     public void addProduct(String name, Category category, int rating) {
         this.productList.add(new Product(name, category, rating));
     }
 
+    @Override
     public void addProductWithManualDate(String name, Category category, int rating, LocalDateTime creationDate) {
         this.productList.add(new Product(name, category, rating, creationDate));
     }
 
+    @Override
     public void addProductWithManualId(String id, String name, Category category, int rating) {
         this.productList.add(new Product(id, name, category, rating));
     }
 
+    @Override
     public void addProductWithManualCreationAndModificationDate(String name, Category category, int rating, LocalDateTime CreationDate, LocalDateTime modificationDate) {
         this.productList.add(new Product(name, category, rating, CreationDate, modificationDate));
     }
 
-
+    @Override
     public void modifyProduct(String id, String name, Category category, int rating) {
         for (Product product : productList) {
             if (product.getId().equals(id)) {
@@ -58,10 +64,12 @@ public class Warehouse {
         }
     }
 
+    @Override
     public List<ImmutableProduct> getAllProducts() {
         return productList.stream().map(this::convertObjectToRecord).toList();
     }
 
+    @Override
     public Optional<ImmutableProduct> getOneProduct(String id) {
         return productList.stream()
                 .filter(product -> product.getId().equals(id))
@@ -69,6 +77,7 @@ public class Warehouse {
                 .findFirst();
     }
 
+    @Override
     public List<ImmutableProduct> getCategory(Category category) {
         return
                 productList.stream()
@@ -78,6 +87,7 @@ public class Warehouse {
                         .toList();
     }
 
+    @Override
     public List<ImmutableProduct> getNewProducts(LocalDateTime time) {
         return
                 productList.stream().filter(product -> product.getCreationDate().isAfter(time))
@@ -85,6 +95,7 @@ public class Warehouse {
                         .toList();
     }
 
+    @Override
     public List<ImmutableProduct> getModifiedProducts() {
         return
                 productList.stream()
@@ -93,18 +104,21 @@ public class Warehouse {
                         .toList();
     }
 
+    @Override
     public Set<Category> getAllCategoriesWithProducts() {
         return productList.stream()
                 .map(Product::getCategory)
                 .collect(Collectors.toUnmodifiableSet());
     }
 
+    @Override
     public int getNumberOfProductsInCategory(Category category) {
         return productList.stream()
                 .filter(product -> product.getCategory().equals(category))
                 .toList().size();
     }
 
+    @Override
     public Map<String, Integer> getLetterOfProductNames() {
         return productList.stream()
                 .map(Product::getName)
@@ -114,6 +128,7 @@ public class Warehouse {
                 .collect(Collectors.groupingBy(Function.identity(), collectingAndThen(counting(), Long::intValue)));
     }
 
+    @Override
     public List<ImmutableProduct> getMaxRating() {
         return
                 productList.stream()
