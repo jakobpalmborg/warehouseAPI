@@ -9,8 +9,8 @@ public record ImmutableProduct(
         String name,
         Category category,
         int rating,
-        LocalDateTime creationDate,
-        LocalDateTime modificationDate)
+        String creationDate,
+        String modificationDate)
 {
 
 }

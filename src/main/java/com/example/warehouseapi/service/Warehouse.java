@@ -6,6 +6,7 @@ import com.example.warehouseapi.entities.Product;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
@@ -29,8 +30,8 @@ public class Warehouse implements Iwarehouse {
                 product.getName(),
                 product.getCategory(),
                 product.getRating(),
-                product.getCreationDate(),
-                product.getModificationDate());
+                product.getCreationDate().format(DateTimeFormatter.ISO_LOCAL_DATE),
+                product.getModificationDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
     }
 
     @Override
