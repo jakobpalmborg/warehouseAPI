@@ -75,9 +75,9 @@ public class WarehouseResource {
     }
 
     @GET
-    @Path("/products/new/{date}")
+    @Path("/products")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<ImmutableProduct> getNewProductsEndpoint(@PathParam("date") String dateString) {
+    public List<ImmutableProduct> getNewProductsEndpoint(@QueryParam("date") String dateString) {
         String dateStringWithHours = dateString + " 00:00";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime dateTime = LocalDateTime.parse(dateStringWithHours, formatter);
