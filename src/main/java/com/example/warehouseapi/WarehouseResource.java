@@ -3,8 +3,8 @@ package com.example.warehouseapi;
 import com.example.warehouseapi.entities.Category;
 import com.example.warehouseapi.entities.ImmutableProduct;
 import com.example.warehouseapi.entities.NewProduct;
+import com.example.warehouseapi.interceptor.Log;
 import com.example.warehouseapi.service.Iwarehouse;
-import com.example.warehouseapi.service.Warehouse;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -18,6 +18,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Path("/")
+@Log
 public class WarehouseResource {
 
     private Iwarehouse warehouse;
