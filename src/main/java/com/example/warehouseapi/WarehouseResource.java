@@ -3,7 +3,8 @@ package com.example.warehouseapi;
 import com.example.warehouseapi.entities.Category;
 import com.example.warehouseapi.entities.ImmutableProduct;
 import com.example.warehouseapi.entities.NewProduct;
-import com.example.warehouseapi.interceptor.Log;
+import com.example.warehouseapi.interceptor.LogMethodEntry;
+import com.example.warehouseapi.interceptor.LogCreateProduct;
 import com.example.warehouseapi.service.Iwarehouse;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -18,7 +19,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Path("/")
-@Log
+@LogMethodEntry
 public class WarehouseResource {
 
     private Iwarehouse warehouse;
@@ -34,6 +35,7 @@ public class WarehouseResource {
 
     @POST
     @Path("/products")
+    @LogCreateProduct
     @Produces("text/plain")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response postProduct(NewProduct prod) {
@@ -46,6 +48,7 @@ public class WarehouseResource {
 
     @GET
     @Path("/products")
+
     @Produces(MediaType.APPLICATION_JSON)
     public List<ImmutableProduct> getAllProductsEndpoint() {
         return warehouse.getAllProducts();
