@@ -18,7 +18,7 @@ public class LogCreateProductInterceptor {
     Logger logger = LoggerFactory.getLogger(LogCreateProductInterceptor.class);
 
     @AroundInvoke
-    public Object logMethodEntry(InvocationContext context) throws Exception {
+    public Object LogCreateProduct(InvocationContext context) throws Exception {
         logger.info(Arrays.toString(context.getParameters()));
         return context.proceed();
     }

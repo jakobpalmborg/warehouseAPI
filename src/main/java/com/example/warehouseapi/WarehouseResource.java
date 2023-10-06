@@ -5,6 +5,7 @@ import com.example.warehouseapi.entities.ImmutableProduct;
 import com.example.warehouseapi.entities.NewProduct;
 import com.example.warehouseapi.interceptor.LogMethodEntry;
 import com.example.warehouseapi.interceptor.LogCreateProduct;
+import com.example.warehouseapi.interceptor.LogUpdateProduct;
 import com.example.warehouseapi.service.Iwarehouse;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -70,6 +71,7 @@ public class WarehouseResource {
 
     @PUT
     @Path("products/{id}")
+    @LogUpdateProduct
     public Response modifyProductEndpoint(@PathParam("id") String id, NewProduct prod){
         String name = prod.name();
         Category category = prod.category();
@@ -79,7 +81,7 @@ public class WarehouseResource {
     }
 
     @GET
-    @Path("/products")
+    @Path("/products/date")
     @Produces(MediaType.APPLICATION_JSON)
     public List<ImmutableProduct> getNewProductsEndpoint(@QueryParam("date") String dateString) {
         String dateStringWithHours = dateString + " 00:00";
