@@ -10,6 +10,7 @@ import com.example.warehouseapi.service.Iwarehouse;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -74,7 +75,14 @@ public class WarehouseResource {
     @GET
     @Path("/categories/{category}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<ImmutableProduct> getAllProductsInCategory(@PathParam("category") Category category) {
+    public List<ImmutableProduct> getAllProductsInCategory(
+            @PathParam("category")
+            @Pattern(regexp = "^(guitar|GUITAR|bass|BASS|drums|DRUMS|keyboard|KEYBOARD)$")
+            @Valid
+            String categoryAsString
+
+    ) {
+        Category category = Category.valueOf(categoryAsString.toUpperCase());
         return warehouse.getCategory(category);
     }
 
@@ -122,7 +130,14 @@ public class WarehouseResource {
     @GET
     @Path("/categories/{category}/count")
     @Produces(MediaType.APPLICATION_JSON)
-    public int getNumberOfProductsInCategoryEndPoint(@PathParam("category") Category category) {
+    public int getNumberOfProductsInCategoryEndPoint(
+            @PathParam("category")
+            @Pattern(regexp = "^(guitar|GUITAR|bass|BASS|drums|DRUMS|keyboard|KEYBOARD)$")
+            @Valid
+            String categoryAsString
+
+    ) {
+        Category category = Category.valueOf(categoryAsString.toUpperCase());
         return warehouse.getNumberOfProductsInCategory(category);
     }
 
