@@ -1,9 +1,4 @@
 package com.example.warehouseapi.entities;
-
-
-
-
-
 public record ImmutableProduct(
         String id,
         String name,

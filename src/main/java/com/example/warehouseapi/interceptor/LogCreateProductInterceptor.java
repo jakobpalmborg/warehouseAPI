@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 
-
 @Interceptor
 @Priority(Interceptor.Priority.APPLICATION)
 @LogCreateProduct

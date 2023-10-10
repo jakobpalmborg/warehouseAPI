@@ -1,6 +1,5 @@
 package com.example.warehouseapi.interceptor;
 
-import com.example.warehouseapi.service.Iwarehouse;
 import jakarta.annotation.Priority;
 import jakarta.interceptor.AroundInvoke;
 import jakarta.interceptor.Interceptor;
@@ -10,12 +9,10 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 
-
 @Interceptor
 @Priority(Interceptor.Priority.APPLICATION)
 @LogUpdateProduct
 public class LogUpdateProductInterceptor {
-
     Logger logger = LoggerFactory.getLogger(LogUpdateProductInterceptor.class);
 
     @AroundInvoke

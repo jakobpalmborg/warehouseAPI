@@ -7,7 +7,6 @@ import jakarta.interceptor.InvocationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 @Interceptor
 @Priority(Interceptor.Priority.APPLICATION)
 @LogMethodEntry

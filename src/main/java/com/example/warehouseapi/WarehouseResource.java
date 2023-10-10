@@ -9,7 +9,6 @@ import com.example.warehouseapi.interceptor.LogUpdateProduct;
 import com.example.warehouseapi.service.Iwarehouse;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import jakarta.ws.rs.*;

@@ -1,7 +1,5 @@
 package com.example.warehouseapi.entities;
 
-
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
