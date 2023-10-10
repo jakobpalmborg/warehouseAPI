@@ -8,6 +8,7 @@ import com.example.warehouseapi.interceptor.LogCreateProduct;
 import com.example.warehouseapi.interceptor.LogUpdateProduct;
 import com.example.warehouseapi.service.Iwarehouse;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -39,9 +40,10 @@ public class WarehouseResource {
     @LogCreateProduct
     @Produces("text/plain")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response postProduct(NewProduct prod) {
+    public Response postProduct(@Valid NewProduct prod) {
         String name = prod.name();
-        Category category = prod.category();
+        String categoryAsString = prod.category().toUpperCase();
+        Category category = Category.valueOf(categoryAsString);
         int rating = prod.rating();
         warehouse.addProduct(name, category, rating);
         return Response.accepted().build();
@@ -74,7 +76,8 @@ public class WarehouseResource {
     @LogUpdateProduct
     public Response modifyProductEndpoint(@PathParam("id") String id, NewProduct prod){
         String name = prod.name();
-        Category category = prod.category();
+        String categoryAsString = prod.category().toUpperCase();
+        Category category = Category.valueOf(categoryAsString);
         int rating = prod.rating();
         warehouse.modifyProduct(id, name, category, rating);
         return Response.accepted().build();
