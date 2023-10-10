@@ -1,7 +1,7 @@
 package com.example.warehouseapi.entities;
 
 
-import java.time.LocalDateTime;
+
 
 
 public record ImmutableProduct(

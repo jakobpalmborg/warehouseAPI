@@ -9,6 +9,8 @@ import com.example.warehouseapi.interceptor.LogUpdateProduct;
 import com.example.warehouseapi.service.Iwarehouse;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -60,7 +62,12 @@ public class WarehouseResource {
     @GET
     @Path("/products/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Optional<ImmutableProduct> getOneProductEndpoint(@PathParam("id") String id) {
+    public Optional<ImmutableProduct> getOneProductEndpoint(
+            @PathParam("id")
+            @Valid
+            @Size(min = 36, max = 36)
+            String id
+    ) {
         return warehouse.getOneProduct(id);
     }
 
@@ -74,7 +81,12 @@ public class WarehouseResource {
     @PUT
     @Path("products/{id}")
     @LogUpdateProduct
-    public Response modifyProductEndpoint(@PathParam("id") String id, NewProduct prod){
+    public Response modifyProductEndpoint(
+            @PathParam("id")
+            @Valid
+            @Size(min = 36, max = 36)
+            String id,
+            NewProduct prod) {
         String name = prod.name();
         String categoryAsString = prod.category().toUpperCase();
         Category category = Category.valueOf(categoryAsString);
