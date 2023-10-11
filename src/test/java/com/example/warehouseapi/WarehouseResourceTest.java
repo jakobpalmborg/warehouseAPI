@@ -1,18 +1,14 @@
 
 package com.example.warehouseapi;
 
-import static org.assertj.core.api.FactoryBasedNavigableListAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.example.warehouseapi.entities.Category;
 import com.example.warehouseapi.entities.ImmutableProduct;
 import com.example.warehouseapi.entities.NewProduct;
-import com.example.warehouseapi.entities.Product;
 import com.example.warehouseapi.service.Iwarehouse;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.ws.rs.core.MediaType;
-import org.assertj.core.api.Assertions;
 import org.jboss.resteasy.mock.MockDispatcherFactory;
 import org.jboss.resteasy.mock.MockHttpRequest;
 import org.jboss.resteasy.mock.MockHttpResponse;
@@ -30,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-
 
 @ExtendWith(MockitoExtension.class)
 class WarehouseResourceTest {
@@ -193,7 +188,7 @@ class WarehouseResourceTest {
 
     @Test
     public void letterOfProductNamesAndStatus200() throws Exception {
-        Mockito.when(mockWarehouse.getLetterOfProductNames()).thenReturn(Map.of("A",2,"B", 3 ));
+        Mockito.when(mockWarehouse.getLetterOfProductNames()).thenReturn(Map.of("A", 2, "B", 3));
 
         MockHttpRequest request = MockHttpRequest.get("/products/initials");
         MockHttpResponse response = new MockHttpResponse();
