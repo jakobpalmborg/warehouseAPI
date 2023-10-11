@@ -27,6 +27,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -187,6 +188,20 @@ class WarehouseResourceTest {
 
         assertEquals(200, response.getStatus());
         assertEquals("2",
+                response.getContentAsString());
+    }
+
+    @Test
+    public void letterOfProductNamesAndStatus200() throws Exception {
+        Mockito.when(mockWarehouse.getLetterOfProductNames()).thenReturn(Map.of("A",2,"B", 3 ));
+
+        MockHttpRequest request = MockHttpRequest.get("/products/initials");
+        MockHttpResponse response = new MockHttpResponse();
+
+        dispatcher.invoke(request, response);
+
+        assertEquals(200, response.getStatus());
+        assertEquals("{\"A\":2,\"B\":3}",
                 response.getContentAsString());
     }
 
