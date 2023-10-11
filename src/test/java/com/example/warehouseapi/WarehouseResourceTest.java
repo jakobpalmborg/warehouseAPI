@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Optional;
 
 
-
 @ExtendWith(MockitoExtension.class)
 class WarehouseResourceTest {
 
@@ -144,5 +143,23 @@ class WarehouseResourceTest {
                         "{\"id\":\"b23456789012345678901234567890123456\",\"name\":\"Gibson Les Paul\",\"category\":\"GUITAR\",\"rating\":2,\"creationDate\":\"2023-10-10\",\"modificationDate\":\"2023-10-10\"}]",
                 response.getContentAsString());
     }
+
+    @Test
+    public void modifiedProductsReturnModifiedProductsAndStatus200() throws Exception {
+        Mockito.when(mockWarehouse.getModifiedProducts()).thenReturn(List.of(
+                new ImmutableProduct("a23456789012345678901234567890123456", "Fender Stratocaster", Category.GUITAR, 8, "2023-10-09", "2023-10-10"),
+                new ImmutableProduct("b23456789012345678901234567890123456", "Gibson Les Paul", Category.GUITAR, 2, "2023-10-09", "2023-10-10")));
+
+        MockHttpRequest request = MockHttpRequest.get("/products/modified");
+        MockHttpResponse response = new MockHttpResponse();
+
+        dispatcher.invoke(request, response);
+
+        assertEquals(200, response.getStatus());
+        assertEquals("[{\"id\":\"a23456789012345678901234567890123456\",\"name\":\"Fender Stratocaster\",\"category\":\"GUITAR\",\"rating\":8,\"creationDate\":\"2023-10-09\",\"modificationDate\":\"2023-10-10\"}," +
+                        "{\"id\":\"b23456789012345678901234567890123456\",\"name\":\"Gibson Les Paul\",\"category\":\"GUITAR\",\"rating\":2,\"creationDate\":\"2023-10-09\",\"modificationDate\":\"2023-10-10\"}]",
+                response.getContentAsString());
+    }
+
 
 }
