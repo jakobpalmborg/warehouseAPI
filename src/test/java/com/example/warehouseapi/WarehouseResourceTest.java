@@ -28,6 +28,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -158,6 +159,20 @@ class WarehouseResourceTest {
         assertEquals(200, response.getStatus());
         assertEquals("[{\"id\":\"a23456789012345678901234567890123456\",\"name\":\"Fender Stratocaster\",\"category\":\"GUITAR\",\"rating\":8,\"creationDate\":\"2023-10-09\",\"modificationDate\":\"2023-10-10\"}," +
                         "{\"id\":\"b23456789012345678901234567890123456\",\"name\":\"Gibson Les Paul\",\"category\":\"GUITAR\",\"rating\":2,\"creationDate\":\"2023-10-09\",\"modificationDate\":\"2023-10-10\"}]",
+                response.getContentAsString());
+    }
+
+    @Test
+    public void categoriesReturnAllCategoriesWithProductsAndStatus200() throws Exception {
+        Mockito.when(mockWarehouse.getAllCategoriesWithProducts()).thenReturn(Set.of(Category.GUITAR, Category.BASS));
+
+        MockHttpRequest request = MockHttpRequest.get("/categories");
+        MockHttpResponse response = new MockHttpResponse();
+
+        dispatcher.invoke(request, response);
+
+        assertEquals(200, response.getStatus());
+        assertEquals("[\"BASS\",\"GUITAR\"]",
                 response.getContentAsString());
     }
 
