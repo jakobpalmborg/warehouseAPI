@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.example.warehouseapi.entities.Category;
 import com.example.warehouseapi.entities.ImmutableProduct;
+import com.example.warehouseapi.entities.NewProduct;
 import com.example.warehouseapi.entities.Product;
 import com.example.warehouseapi.service.Iwarehouse;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -85,7 +86,7 @@ class WarehouseResourceTest {
         MockHttpResponse response = new MockHttpResponse();
 
         dispatcher.invoke(request, response);
-        
+
         assertEquals(200, response.getStatus());
         assertEquals("{\"empty\":false,\"present\":true}", response.getContentAsString());
     }
@@ -107,5 +108,19 @@ class WarehouseResourceTest {
                 response.getContentAsString());
     }
 
+    @Test
+    void putProductGetStatus202() throws Exception {
+        MockHttpRequest request = MockHttpRequest.put("/products/a23456789012345678901234567890123456");
+        String json = new ObjectMapper().writeValueAsString(new NewProduct("Fender Stratocaster", "Guitar", 8));
+        request.content(json.getBytes());
+        request.contentType(MediaType.APPLICATION_JSON);
+        MockHttpResponse response = new MockHttpResponse();
+
+        dispatcher.invoke(request, response);
+
+        assertEquals(202, response.getStatus());
+    }
+
+    
 
 }
