@@ -24,6 +24,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -121,6 +123,26 @@ class WarehouseResourceTest {
         assertEquals(202, response.getStatus());
     }
 
-    
+
+    @Test
+    public void newProductsReturnProductsAndStatus200() throws Exception {
+        String dateString = "2023-10-09";
+        String dateStringWithHours = dateString + " 00:00";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime dateTime = LocalDateTime.parse(dateStringWithHours, formatter);
+        Mockito.when(mockWarehouse.getNewProducts(dateTime)).thenReturn(List.of(
+                new ImmutableProduct("a23456789012345678901234567890123456", "Fender Stratocaster", Category.GUITAR, 8, "2023-10-10", "2023-10-10"),
+                new ImmutableProduct("b23456789012345678901234567890123456", "Gibson Les Paul", Category.GUITAR, 2, "2023-10-10", "2023-10-10")));
+
+        MockHttpRequest request = MockHttpRequest.get("/products/date?date=2023-10-09");
+        MockHttpResponse response = new MockHttpResponse();
+
+        dispatcher.invoke(request, response);
+
+        assertEquals(200, response.getStatus());
+        assertEquals("[{\"id\":\"a23456789012345678901234567890123456\",\"name\":\"Fender Stratocaster\",\"category\":\"GUITAR\",\"rating\":8,\"creationDate\":\"2023-10-10\",\"modificationDate\":\"2023-10-10\"}," +
+                        "{\"id\":\"b23456789012345678901234567890123456\",\"name\":\"Gibson Les Paul\",\"category\":\"GUITAR\",\"rating\":2,\"creationDate\":\"2023-10-10\",\"modificationDate\":\"2023-10-10\"}]",
+                response.getContentAsString());
+    }
 
 }
