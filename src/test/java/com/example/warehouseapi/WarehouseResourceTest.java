@@ -46,9 +46,11 @@ class WarehouseResourceTest {
         dispatcher.invoke(request, response);
 
         assertEquals(200, response.getStatus());
-        assertEquals(List.of(
-                new ImmutableProduct("a23456789012345678901234567890123456","Fender Stratocaster", Category.GUITAR, 8, "2023-10-10","2023-10-10" ),
-                new ImmutableProduct("b23456789012345678901234567890123456","Fender Jazz Bass", Category.BASS, 8, "2023-10-10","2023-10-10" ).toString()),
+        assertEquals("[{\"id\":\"a23456789012345678901234567890123456\",\"name\":\"Fender Stratocaster\",\"category\":\"GUITAR\",\"rating\":8,\"creationDate\":\"2023-10-10\",\"modificationDate\":\"2023-10-10\"},{\"id\":\"b23456789012345678901234567890123456\",\"name\":\"Fender Jazz Bass\",\"category\":\"BASS\",\"rating\":8,\"creationDate\":\"2023-10-10\",\"modificationDate\":\"2023-10-10\"}]",
                 response.getContentAsString());
     }
+
+    
+
+
 }
