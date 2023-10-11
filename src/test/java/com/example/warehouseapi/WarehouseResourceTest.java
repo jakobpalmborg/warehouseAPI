@@ -78,7 +78,6 @@ class WarehouseResourceTest {
     public void productsIdReturnsOptionalTrueAndStatus200() throws Exception {
 
         Optional<ImmutableProduct> optional = Optional.of((new ImmutableProduct("a23456789012345678901234567890123456", "Fender Stratocaster", Category.GUITAR, 8, "2023-10-10", "2023-10-10")));
-
         Mockito.when(mockWarehouse.getOneProduct("a23456789012345678901234567890123456"))
                 .thenReturn(optional);
 
@@ -86,14 +85,27 @@ class WarehouseResourceTest {
         MockHttpResponse response = new MockHttpResponse();
 
         dispatcher.invoke(request, response);
-
+        
         assertEquals(200, response.getStatus());
-
         assertEquals("{\"empty\":false,\"present\":true}", response.getContentAsString());
-
     }
 
-    
+    @Test
+    public void categoriesReturnAllProductsInCategoryAndStatus200() throws Exception {
+        Mockito.when(mockWarehouse.getCategory(Category.GUITAR)).thenReturn(List.of(
+                new ImmutableProduct("a23456789012345678901234567890123456", "Fender Stratocaster", Category.GUITAR, 8, "2023-10-10", "2023-10-10"),
+                new ImmutableProduct("b23456789012345678901234567890123456", "Gibson Les Paul", Category.GUITAR, 2, "2023-10-10", "2023-10-10")));
+
+        MockHttpRequest request = MockHttpRequest.get("/categories/guitar");
+        MockHttpResponse response = new MockHttpResponse();
+
+        dispatcher.invoke(request, response);
+
+        assertEquals(200, response.getStatus());
+        assertEquals("[{\"id\":\"a23456789012345678901234567890123456\",\"name\":\"Fender Stratocaster\",\"category\":\"GUITAR\",\"rating\":8,\"creationDate\":\"2023-10-10\",\"modificationDate\":\"2023-10-10\"}," +
+                        "{\"id\":\"b23456789012345678901234567890123456\",\"name\":\"Gibson Les Paul\",\"category\":\"GUITAR\",\"rating\":2,\"creationDate\":\"2023-10-10\",\"modificationDate\":\"2023-10-10\"}]",
+                response.getContentAsString());
+    }
 
 
 }
