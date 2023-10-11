@@ -5,7 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.example.warehouseapi.entities.Category;
 import com.example.warehouseapi.entities.ImmutableProduct;
+import com.example.warehouseapi.entities.Product;
 import com.example.warehouseapi.service.Iwarehouse;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.ws.rs.core.MediaType;
 import org.jboss.resteasy.mock.MockDispatcherFactory;
 import org.jboss.resteasy.mock.MockHttpRequest;
 import org.jboss.resteasy.mock.MockHttpResponse;
@@ -46,11 +49,23 @@ class WarehouseResourceTest {
         dispatcher.invoke(request, response);
 
         assertEquals(200, response.getStatus());
-        assertEquals("[{\"id\":\"a23456789012345678901234567890123456\",\"name\":\"Fender Stratocaster\",\"category\":\"GUITAR\",\"rating\":8,\"creationDate\":\"2023-10-10\",\"modificationDate\":\"2023-10-10\"},{\"id\":\"b23456789012345678901234567890123456\",\"name\":\"Fender Jazz Bass\",\"category\":\"BASS\",\"rating\":8,\"creationDate\":\"2023-10-10\",\"modificationDate\":\"2023-10-10\"}]",
+        assertEquals("[{\"id\":\"a23456789012345678901234567890123456\",\"name\":\"Fender Stratocaster\",\"category\":\"GUITAR\",\"rating\":8,\"creationDate\":\"2023-10-10\",\"modificationDate\":\"2023-10-10\"}," +
+                        "{\"id\":\"b23456789012345678901234567890123456\",\"name\":\"Fender Jazz Bass\",\"category\":\"BASS\",\"rating\":8,\"creationDate\":\"2023-10-10\",\"modificationDate\":\"2023-10-10\"}]",
                 response.getContentAsString());
     }
 
-    
+    @Test
+    void postProduct() throws Exception {
+        MockHttpRequest request = MockHttpRequest.post("/products");
+        String json = new ObjectMapper().writeValueAsString(new ImmutableProduct("a23456789012345678901234567890123456","Fender Stratocaster", Category.GUITAR, 8, "2023-10-10","2023-10-10" ));
+        request.content(json.getBytes());
+        request.contentType(MediaType.APPLICATION_JSON);
+        MockHttpResponse response = new MockHttpResponse();
+
+        dispatcher.invoke(request, response);
+
+        assertEquals(400, response.getStatus());
+    }
 
 
 }
