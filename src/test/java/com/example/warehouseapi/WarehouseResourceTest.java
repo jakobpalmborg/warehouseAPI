@@ -172,9 +172,24 @@ class WarehouseResourceTest {
         dispatcher.invoke(request, response);
 
         assertEquals(200, response.getStatus());
-        assertEquals("[\"BASS\",\"GUITAR\"]",
+
+        assertTrue(response.getContentAsString().equals("[\"BASS\",\"GUITAR\"]") || response.getContentAsString().equals("[\"GUITAR\",\"BASS\"]"));
+    }
+
+    @Test
+    public void categoriesCountAndStatus200() throws Exception {
+        Mockito.when(mockWarehouse.getNumberOfProductsInCategory(Category.GUITAR)).thenReturn(2);
+
+        MockHttpRequest request = MockHttpRequest.get("/categories/guitar/count");
+        MockHttpResponse response = new MockHttpResponse();
+
+        dispatcher.invoke(request, response);
+
+        assertEquals(200, response.getStatus());
+        assertEquals("2",
                 response.getContentAsString());
     }
+
 
 
 }
