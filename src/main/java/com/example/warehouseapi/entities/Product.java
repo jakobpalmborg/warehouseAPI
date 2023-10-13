@@ -6,7 +6,6 @@ import java.util.UUID;
 public class Product {
     String id;
     String name;
-
     Category category;
     int rating;
     final LocalDateTime creationDate;
@@ -100,4 +99,3 @@ public class Product {
                 '}';
     }
 }
-

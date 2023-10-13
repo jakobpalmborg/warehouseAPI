@@ -3,7 +3,6 @@ package com.example.warehouseapi.interceptor;
 import jakarta.interceptor.InterceptorBinding;
 
 import java.lang.annotation.Retention;
-
 import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.*;
