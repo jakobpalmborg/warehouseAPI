@@ -6,6 +6,8 @@ import com.example.warehouseapi.service.Warehouse;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
 
@@ -92,8 +94,10 @@ class WarehouseTest {
     @Test
     void whenModifyOneProductThenOnlyGetOneProduct() {
         Warehouse myWarehouse = new Warehouse();
+        LocalDateTime aDateTime = LocalDateTime.of(2023,
+                Month.OCTOBER, 17, 10, 10, 10);
         myWarehouse.addProductWithManualCreationAndModificationDate("Gibson Les Paul", Category.GUITAR, 3, LocalDateTime.now().minusDays(1), LocalDateTime.now());
-        myWarehouse.addProduct("Fender Jazz bass", Category.BASS, 4);
+        myWarehouse.addProductWithManualCreationAndModificationDate("Fender Jazz bass", Category.BASS, 4, aDateTime, aDateTime);
         assertThat(myWarehouse.getModifiedProducts().size())
                 .isEqualTo(1);
     }
