@@ -85,6 +85,11 @@
             <version>2.0.7</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+            <version>1.14.9</version>
+        </dependency>
     </dependencies>
 
     <build>
