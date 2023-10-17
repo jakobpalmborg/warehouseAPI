@@ -1,4 +1,4 @@
-FROM quay.io/wildfly/wildfly
+FROM quay.io/wildfly/wildfly:latest-jdk20
 
 EXPOSE 8080
 
