@@ -18,20 +18,11 @@ import static java.util.stream.Collectors.counting;
 @ApplicationScoped
 public class Warehouse implements Iwarehouse {
 
+
     private final CopyOnWriteArrayList<Product> productList;
 
     public Warehouse() {
         productList = new CopyOnWriteArrayList<>();
-    }
-
-    private ImmutableProduct convertObjectToRecord(Product product) {
-        return new ImmutableProduct(
-                product.getId(),
-                product.getName(),
-                product.getCategory(),
-                product.getRating(),
-                product.getCreationDate().format(DateTimeFormatter.ISO_LOCAL_DATE),
-                product.getModificationDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
     }
 
     @Override
@@ -58,24 +49,26 @@ public class Warehouse implements Iwarehouse {
     public void modifyProduct(String id, String name, Category category, int rating) {
         for (Product product : productList) {
             if (product.getId().equals(id)) {
-                product.setName(name);
-                product.setCategory(category);
-                product.setRating(rating);
-                product.setModificationDate(LocalDateTime.now());
+                Product tempProduct = new Product(product);
+                tempProduct.setName(name);
+                tempProduct.setCategory(category);
+                tempProduct.setRating(rating);
+                tempProduct.setModificationDate(LocalDateTime.now());
+                product.copy(tempProduct);
             }
         }
     }
 
     @Override
     public List<ImmutableProduct> getAllProducts() {
-        return productList.stream().map(this::convertObjectToRecord).toList();
+        return productList.stream().map(ImmutableProduct::convertObjectToRecord).toList();
     }
 
     @Override
     public Optional<ImmutableProduct> getOneProduct(String id) {
         return productList.stream()
                 .filter(product -> product.getId().equals(id))
-                .map(this::convertObjectToRecord)
+                .map(ImmutableProduct::convertObjectToRecord)
                 .findFirst();
     }
 
@@ -85,7 +78,7 @@ public class Warehouse implements Iwarehouse {
                 productList.stream()
                         .filter(product -> product.getCategory().equals(category))
                         .sorted(Comparator.comparing(Product::getName))
-                        .map(this::convertObjectToRecord)
+                        .map(ImmutableProduct::convertObjectToRecord)
                         .toList();
     }
 
@@ -93,7 +86,7 @@ public class Warehouse implements Iwarehouse {
     public List<ImmutableProduct> getNewProducts(LocalDateTime time) {
         return
                 productList.stream().filter(product -> product.getCreationDate().isAfter(time))
-                        .map(this::convertObjectToRecord)
+                        .map(ImmutableProduct::convertObjectToRecord)
                         .toList();
     }
 
@@ -102,7 +95,7 @@ public class Warehouse implements Iwarehouse {
         return
                 productList.stream()
                         .filter(product -> !product.getCreationDate().equals(product.getModificationDate()))
-                        .map(this::convertObjectToRecord)
+                        .map(ImmutableProduct::convertObjectToRecord)
                         .toList();
     }
 
@@ -137,7 +130,7 @@ public class Warehouse implements Iwarehouse {
                         .filter(product -> product.getRating() > 9)
                         .filter(product -> product.getCreationDate().isAfter(LocalDateTime.now().minusDays(30)))
                         .sorted(Comparator.comparing(Product::getCreationDate))
-                        .map(this::convertObjectToRecord)
+                        .map(ImmutableProduct::convertObjectToRecord)
                         .toList();
     }
 

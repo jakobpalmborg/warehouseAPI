@@ -8,7 +8,7 @@ public class Product {
     String name;
     Category category;
     int rating;
-    final LocalDateTime creationDate;
+    LocalDateTime creationDate;
     LocalDateTime modificationDate;
 
     public Product(String name, Category category, int rating) {
@@ -47,6 +47,10 @@ public class Product {
         this.modificationDate = LocalDateTime.now();
     }
 
+    public Product(Product x) {
+        this.copy(x);
+    }
+
     public String getId() {
         return id;
     }
@@ -71,6 +75,10 @@ public class Product {
         return modificationDate;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -83,8 +91,21 @@ public class Product {
         this.rating = rating;
     }
 
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+
     public void setModificationDate(LocalDateTime modificationDate) {
         this.modificationDate = modificationDate;
+    }
+
+    public void copy(Product x) {
+        this.setId(x.getId());
+        this.setName(x.getName());
+        this.setCategory(x.getCategory());
+        this.setCreationDate(x.getCreationDate());
+        this.setModificationDate(x.getModificationDate());
+        this.setRating(x.getRating());
     }
 
     @Override
