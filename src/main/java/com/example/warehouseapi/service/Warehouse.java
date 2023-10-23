@@ -54,7 +54,7 @@ public class Warehouse implements Iwarehouse {
                 tempProduct.setCategory(category);
                 tempProduct.setRating(rating);
                 tempProduct.setModificationDate(LocalDateTime.now());
-                product.copy(tempProduct);
+                productList.replaceAll(p -> p.getId().equals(id) ? tempProduct : p);
             }
         }
     }
